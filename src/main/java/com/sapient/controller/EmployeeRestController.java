@@ -51,9 +51,9 @@ public class EmployeeRestController {
     }
     
     //http://localhost:9090/api/employees/1
-    @GetMapping("/employees/{id}")
-    public Employee getEmployeeById(@PathVariable("id") Long id){
-    	return employeeService.getEmployeeById(id);
-    }
+//    @GetMapping("/employees/{id}")
+//    public Employee getEmployeeById(@PathVariable("id") Long id){
+//    	return employeeService.getEmployeeById(id);
+//    }
 
 }
