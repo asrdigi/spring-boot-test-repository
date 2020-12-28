@@ -50,10 +50,10 @@ public class EmployeeRestController {
     	return employeeService.getAllSalaryGreaterThan(salary);
     }
     
-    //http://localhost:9090/api/employees/1
-    @GetMapping("/employees/{id}")
-    public Employee getEmployeeById(@PathVariable("id") Long id){
-    	return employeeService.getEmployeeById(id);
-    }
+//    //http://localhost:9090/api/employees/1
+//    @GetMapping("/employees/{id}")
+//    public Employee getEmployeeById(@PathVariable("id") Long id){
+//    	return employeeService.getEmployeeById(id);
+//    }
 
 }
