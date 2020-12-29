@@ -23,7 +23,7 @@ pipeline {
 		}
 	}
        
-       stage('SonarQube'){
+      /* stage('SonarQube'){
 		steps{		 		
 				bat label: '', script: '''mvn sonar:sonar \
 				-Dsonar.host.url=http://localhost:9000 \
@@ -36,7 +36,26 @@ pipeline {
 			echo 'Project packaging stage'			
 			bat label: 'Project packaging', script: '''mvn package'''
 		}
-	} 		
+	} 
+	
+	*/
+	
+	
+	stage("build & SonarQube analysis") {
+           // agent any
+            steps {
+              withSonarQubeEnv('My SonarQube Server') {
+                sh 'mvn clean package sonar:sonar'
+              }
+            }
+          }
+          stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }		
     
   }
 }
