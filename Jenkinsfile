@@ -29,7 +29,7 @@ pipeline {
 				bat label: '', script: '''mvn sonar:sonar \
 				-Dsonar.host.url=http://localhost:9000 \
 				-Dsonar.analysis.mode= \
-				-Dsonar.login=4e786f6325bc6bac3fca0554d8f0dbf7a3a5b719'''
+				-Dsonar.login=d51e7f6380a528b36cea3db64f4ee21870015682'''
 			}
    		}
 	
@@ -43,12 +43,35 @@ pipeline {
           }
       }
       */
-
+	/*
       stage("Quality Gate"){
         steps{
           waitForQualityGate abortPipeline: true
          } 
       }
+     */
+      
+      /*
+      stage("Sonar Analysis ") {
+        agent any
+            steps {
+                withSonarQubeEnv('SonarTiss'){
+                    // If you are using Windows then you should use "bat" step
+                    // Since unit testing is out of the scope we skip them
+                    sh "mvn -B clean deploy sonar:sonar"
+                }
+            }
+        }
+       */ 
+              
+        stage ("Quality Gate ") {
+            steps {
+                timeout(time: 1, unit: 'HOURS') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+      
       
       stage('Maven Package'){
 		steps{
