@@ -23,24 +23,26 @@ pipeline {
 		}
 	}
        
-       /*
-       stage('SonarQube'){
+      
+       stage('SonarQube Analysis'){
 		steps{		 		
 				bat label: '', script: '''mvn sonar:sonar \
 				-Dsonar.host.url=http://localhost:9000 \
+				-Dsonar.analysis.mode= \
 				-Dsonar.login=4e786f6325bc6bac3fca0554d8f0dbf7a3a5b719'''
 			}
    		}
-	*/
 	
 	
-	stage('SonarQube analysis') {
+	/*
+	stage('SonarQube Analysis') {
           steps {
               withSonarQubeEnv('SonarQube') {
                  sh 'mvn clean package sonar:sonar'
               }
           }
       }
+      */
 
       stage("Quality Gate"){
         steps{
