@@ -23,7 +23,7 @@ pipeline {
 		}
 	}
        
-      
+      /*
        stage('SonarQube Analysis'){
 		steps{		 		
 				bat label: '', script: '''mvn sonar:sonar \
@@ -32,7 +32,7 @@ pipeline {
 				-Dsonar.login=d51e7f6380a528b36cea3db64f4ee21870015682'''
 			}
    		}
-	
+	*/
 	
 	/*
 	stage('SonarQube Analysis') {
@@ -64,6 +64,7 @@ pipeline {
         }
        */ 
               
+      /*
         stage ("Quality Gate ") {
             steps {
                 timeout(time: 1, unit: 'HOURS') {
@@ -71,6 +72,39 @@ pipeline {
                 }
             }
         }
+      */
+      /*
+      stage ("SonarQube analysis") {
+  		 steps {
+      		withSonarQubeEnv('SonarQube') {
+         		sh "../../../sonar-scanner-2.9.0.670/bin/sonar-scanner"   
+      		}
+
+      		def qualitygate = waitForQualityGate()
+      		if (qualitygate.status != "OK") {
+         		error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+      		}
+   		 }
+		}
+	*/
+      
+      stage("Build & SonarQube Analysis") {
+          node {
+              withSonarQubeEnv('My SonarQube Server') {
+                 sh 'mvn clean package sonar:sonar'
+              }    
+          }
+      }
+      
+      stage("Quality Gate"){
+          timeout(time: 1, unit: 'HOURS') {
+              def qg = waitForQualityGate()
+              if (qg.status != 'OK') {
+                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
+              }
+          }
+      }
+      
       
       
       stage('Maven Package'){
