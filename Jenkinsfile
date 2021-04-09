@@ -116,11 +116,11 @@ pipeline {
       
       
       stage('SonarQube Analysis') {
-    withSonarQubeEnv('My SonarQube Server') {
-      sh 'mvn clean package sonar:sonar'
-    } // SonarQube taskId is automatically attached to the pipeline context
-  }
-}
+    	withSonarQubeEnv('My SonarQube Server') {
+      	sh 'mvn clean package sonar:sonar'
+    	} // SonarQube taskId is automatically attached to the pipeline context
+  	}
+
 
 // No need to occupy a node
 stage("Quality Gate"){
