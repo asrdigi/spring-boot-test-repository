@@ -35,9 +35,9 @@ pipeline {
 	*/
 	
 	stage('SonarQube Analysis') {
+	steps{
     withSonarQubeEnv('My SonarQube Server') {
-        //sh 'mvn clean package sonar:sonar'
-        steps{		 		
+        //sh 'mvn clean package sonar:sonar'        		 		
 				bat label: '', script: '''mvn sonar:sonar \
 				-Dsonar.host.url=http://localhost:9000 \
 				-Dsonar.analysis.mode= \
