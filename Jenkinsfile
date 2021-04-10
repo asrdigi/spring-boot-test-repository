@@ -57,7 +57,7 @@ pipeline {
             }
         }
     }
-}
+
       
       stage('Maven Package'){
 		steps{
